@@ -7,7 +7,7 @@ import cors  from 'cors';
 
 AppDataSource.initialize().then(() => {
 // var qui est une app de express et permet d'utiliser les fonctionnalités d'express
-const app= express();
+const app = express();
 app.use(cors());
 //on paramètre la possibilité de récupérer des infos dans un  body au format json
 app.use(express.json());
