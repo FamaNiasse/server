@@ -5,6 +5,10 @@ import cors  from 'cors';
 
 
 
+
+
+
+
 AppDataSource.initialize().then(() => {
 // var qui est une app de express et permet d'utiliser les fonctionnalités d'express
 const app = express();
@@ -13,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send("Hello, world!");
+    res.json("Hello, world!");
 });
 
 //je defini l'url pour les routes uniquement
