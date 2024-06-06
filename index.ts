@@ -1,12 +1,6 @@
-
 import AppDataSource from './data.source';
 import express from 'express';
 import cors  from 'cors';
-
-
-
-
-
 
 
 AppDataSource.initialize().then(() => {
@@ -17,11 +11,11 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.json("Hello, world!");
+    res.json({ message: "Hello, world!"});
 });
 
 //je defini l'url pour les routes uniquement
-// app.use("/products", plantRouter);
+// app.use("/products", productRouter);
 // app.use("/users", userRouter);
 
 app.listen(process.env.PORT, () => {
