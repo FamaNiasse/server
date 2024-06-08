@@ -7,7 +7,7 @@ export class User {
   id: number;
 
   @Column({nullable : false})
-  pseudo : string;
+  pseudo: string;
 
   @Column({nullable : false})
   email: string;

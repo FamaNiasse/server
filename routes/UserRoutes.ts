@@ -7,7 +7,7 @@ const userController = new UserController();
 const userRouter = Router();
 
 userRouter.post("/signup", (req, res) => {
-  console.log("UserRouter - signin");
+  console.log("UserRouter - signup");
   userController.signup(req, res);
 });
 
