@@ -70,7 +70,6 @@ async function createProductsWithNeeds() {
     for (const needData of needsData) {
       let need = await needRepository.findOneBy({ nom_besoin: needData.nom_besoin });
       if (!need) {
-        // needRepository.create(needData);
         await needRepository.save(need);
       }
     }
