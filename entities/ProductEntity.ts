@@ -7,14 +7,20 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   nom_produit: string;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   image: string;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   description: string;
+
+  @Column({ type: 'decimal', nullable: false })
+  prix: number;
+
+  @Column({ type: 'boolean', default: false })
+  promo: boolean;
 
   @ManyToMany(() => Needs, needs => needs.products)
   @JoinTable({
@@ -30,3 +36,4 @@ export class Product {
   })
   needs?: Needs[];
 }
+

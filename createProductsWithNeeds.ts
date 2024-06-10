@@ -66,81 +66,75 @@ async function createProductsWithNeeds() {
     { nom_besoin: "voies_respiratoires", pictogramme: "/assets/images/pictogrammes/voies_respiratoires.png" }
   ];
 
-    // Sauvegarder les besoins sans doublons
-    for (const needData of needsData) {
-      let need = await needRepository.findOneBy({ nom_besoin: needData.nom_besoin });
-      if (!need) {
-        await needRepository.save(need);
-      }
+  // Sauvegarder les besoins sans doublons
+  for (const needData of needsData) {
+    let need = await needRepository.findOneBy({ nom_besoin: needData.nom_besoin });
+    if (!need) {
+      need = needRepository.create(needData);
+      await needRepository.save(need);
     }
-    const savedNeeds = await needRepository.find();
- 
+  }
+  const savedNeeds = await needRepository.find();
+
   // Créer les produits avec des besoins manuellement attribués
   const productsData = [
-    { nom_produit: "Menthe poivrée", image: "image_data", description: "Menthe poivrée", needs: [savedNeeds[0], savedNeeds[1], savedNeeds[2]] },
-    { nom_produit: "achille_millefeuille", image: "image_data", description: "achille_millefeuille", needs: [savedNeeds[3], savedNeeds[4], savedNeeds[5]] },
-    { nom_produit: "bois_de_ho", image: "image_data", description: "bois_de_ho", needs: [savedNeeds[6], savedNeeds[7], savedNeeds[8]] },
-    { nom_produit: "bois_de_rose", image: "image_data", description: "bois_de_rose", needs: [savedNeeds[9], savedNeeds[10], savedNeeds[11]] },
-    { nom_produit: "cade", image: "image_data", description: "cade", needs: [savedNeeds[12], savedNeeds[13], savedNeeds[14]] },
-    { nom_produit: "camomille_romaine", image: "image_data", description: "camomille_romaine", needs: [savedNeeds[15], savedNeeds[16], savedNeeds[17]] },
-    { nom_produit: "camomille_romaine_bio", image: "image_data", description: "camomille_romaine_bio", needs: [savedNeeds[18], savedNeeds[19], savedNeeds[20]] },
-    { nom_produit: "capsules_nez_gorges", image: "image_data", description: "capsules_nez_gorges", needs: [savedNeeds[21], savedNeeds[22], savedNeeds[23]] },
-    { nom_produit: "capsules_origan_citron", image: "image_data", description: "capsules_origan_citron", needs: [savedNeeds[24], savedNeeds[25], savedNeeds[26]] },
-    { nom_produit: "cedre_de_latlas", image: "image_data", description: "cedre_de_latlas", needs: [savedNeeds[27], savedNeeds[28], savedNeeds[29]] },
-    { nom_produit: "chanson_douce", image: "image_data", description: "chanson_douce", needs: [savedNeeds[30], savedNeeds[31], savedNeeds[32]] },
-    { nom_produit: "citron", image: "image_data", description: "citron", needs: [savedNeeds[33], savedNeeds[34], savedNeeds[35]] },
-    { nom_produit: "citronelle", image: "image_data", description: "citronelle", needs: [savedNeeds[36], savedNeeds[37], savedNeeds[38]] },
-    { nom_produit: "coffret_bien_etre", image: "image_data", description: "coffret_bien_etre", needs: [savedNeeds[39], savedNeeds[40], savedNeeds[41]] },
-    { nom_produit: "coffret-ma-pause-ensoleillee", image: "image_data", description: "coffret-ma-pause-ensoleillee", needs: [savedNeeds[42], savedNeeds[43], savedNeeds[44]] },
-    { nom_produit: "coffret-mon-rituel-zen", image: "image_data", description: "coffret-mon-rituel-zen", needs: [savedNeeds[45], savedNeeds[46], savedNeeds[47]] },
-    { nom_produit: "esprit-yoga", image: "image_data", description: "esprit-yoga", needs: [savedNeeds[48], savedNeeds[49], savedNeeds[50]] },
-    { nom_produit: "ete-citronnelle", image: "image_data", description: "ete-citronnelle", needs: [savedNeeds[51], savedNeeds[52], savedNeeds[53]] },
-    { nom_produit: "eucalyptus_citronne", image: "image_data", description: "eucalyptus_citronne", needs: [savedNeeds[0], savedNeeds[1], savedNeeds[2]] },
-    { nom_produit: "eucalyptus_radie", image: "image_data", description: "eucalyptus_radie", needs: [savedNeeds[3], savedNeeds[4], savedNeeds[5]] },
-    { nom_produit: "eucalyptus-globulus-bio", image: "image_data", description: "eucalyptus-globulus-bio", needs: [savedNeeds[6], savedNeeds[7], savedNeeds[8]] },
-    { nom_produit: "flocon-epice", image: "image_data", description: "flocon-epice", needs: [savedNeeds[9], savedNeeds[10], savedNeeds[11]] },
-    { nom_produit: "gaultherie", image: "image_data", description: "gaultherie", needs: [savedNeeds[12], savedNeeds[13], savedNeeds[14]] },
-    { nom_produit: "gaultherie-bio", image: "image_data", description: "gaultherie-bio", needs: [savedNeeds[15], savedNeeds[16], savedNeeds[17]] },
-    { nom_produit: "geranium-rosat-bio", image: "image_data", description: "geranium-rosat-bio", needs: [savedNeeds[18], savedNeeds[19], savedNeeds[20]] },
-    { nom_produit: "girofle-clou-bio", image: "image_data", description: "girofle-clou-bio", needs: [savedNeeds[21], savedNeeds[22], savedNeeds[23]] },
-    { nom_produit: "gourmandise-estivale", image: "image_data", description: "gourmandise-estivale", needs: [savedNeeds[24], savedNeeds[25], savedNeeds[26]] },
-    { nom_produit: "helichryse_italienne", image: "image_data", description: "helichryse_italienne", needs: [savedNeeds[27], savedNeeds[28], savedNeeds[29]] },
-    { nom_produit: "inhalateur_hiver", image: "image_data", description: "inhalateur_hiver", needs: [savedNeeds[30], savedNeeds[31], savedNeeds[32]] },
-    { nom_produit: "instant-detente", image: "image_data", description: "instant-detente", needs: [savedNeeds[33], savedNeeds[34], savedNeeds[35]] },
-    { nom_produit: "lavande_fine", image: "image_data", description: "lavande_fine", needs: [savedNeeds[36], savedNeeds[37], savedNeeds[38]] },
-    { nom_produit: "lavande-aspic-bio", image: "image_data", description: "lavande-aspic-bio", needs: [savedNeeds[39], savedNeeds[40], savedNeeds[41]] },
-    { nom_produit: "mandarine_verte", image: "image_data", description: "mandarine_verte", needs: [savedNeeds[42], savedNeeds[43], savedNeeds[44]] },
-    { nom_produit: "omega3_comprimes", image: "image_data", description: "omega3_comprimes", needs: [savedNeeds[45], savedNeeds[46], savedNeeds[47]] },
-    { nom_produit: "orange_douce", image: "image_data", description: "orange_douce", needs: [savedNeeds[48], savedNeeds[49], savedNeeds[50]] },
-    { nom_produit: "orange-douce-bio", image: "image_data", description: "orange-douce-bio", needs: [savedNeeds[51], savedNeeds[52], savedNeeds[53]] },
-    { nom_produit: "palmarosa-bio", image: "image_data", description: "palmarosa-bio", needs: [savedNeeds[0], savedNeeds[1], savedNeeds[2]] },
-    { nom_produit: "pamplemousse", image: "image_data", description: "pamplemousse", needs: [savedNeeds[3], savedNeeds[4], savedNeeds[5]] },
-    { nom_produit: "petit_grain_brigaradier", image: "image_data", description: "petit_grain_brigaradier", needs: [savedNeeds[6], savedNeeds[7], savedNeeds[8]] },
-    { nom_produit: "promenade-provencale", image: "image_data", description: "promenade-provencale", needs: [savedNeeds[9], savedNeeds[10], savedNeeds[11]] },
-    { nom_produit: "ravintsara", image: "image_data", description: "ravintsara", needs: [savedNeeds[12], savedNeeds[13], savedNeeds[14]] },
-    { nom_produit: "roll_on_stress", image: "image_data", description: "roll_on_stress", needs: [savedNeeds[15], savedNeeds[16], savedNeeds[17]] },
-    { nom_produit: "roll-on-menthe-poivree-bio", image: "image_data", description: "roll-on-menthe-poivree-bio", needs: [savedNeeds[18], savedNeeds[19], savedNeeds[20]] },
-    { nom_produit: "romarin_a_cineole", image: "image_data", description: "romarin_a_cineole", needs: [savedNeeds[21], savedNeeds[22], savedNeeds[23]] },
-    { nom_produit: "romarin-verbenone-bio", image: "image_data", description: "romarin-verbenone-bio", needs: [savedNeeds[24], savedNeeds[25], savedNeeds[26]] },
-    { nom_produit: "seve_de_bouleau", image: "image_data", description: "seve_de_bouleau", needs: [savedNeeds[27], savedNeeds[28], savedNeeds[29]] },
-    { nom_produit: "souffle-frais", image: "image_data", description: "souffle-frais", needs: [savedNeeds[30], savedNeeds[31], savedNeeds[32]] },
-    { nom_produit: "spiruline_sachet", image: "image_data", description: "spiruline_sachet", needs: [savedNeeds[33], savedNeeds[34], savedNeeds[35]] },
-    { nom_produit: "tea_tree", image: "image_data", description: "tea_tree", needs: [savedNeeds[36], savedNeeds[37], savedNeeds[38]] },
-    { nom_produit: "vanille-extrait-bio", image: "image_data", description: "vanille-extrait-bio", needs: [savedNeeds[39], savedNeeds[40], savedNeeds[41]] },
-    { nom_produit: "voyage-oriental", image: "image_data", description: "voyage-oriental", needs: [savedNeeds[42], savedNeeds[43], savedNeeds[44]] },
-    { nom_produit: "zeste-vitalite", image: "image_data", description: "zeste-vitalite", needs: [savedNeeds[45], savedNeeds[46], savedNeeds[47]] },
-    { nom_produit: "serum_repulpant_promo", image: "image_data", description: "serum_repulpant_promo", needs: [savedNeeds[48], savedNeeds[49], savedNeeds[50]] },
-    { nom_produit: "seve_de_bouleau_bio_promo", image: "image_data", description: "seve_de_bouleau_bio_promo", needs: [savedNeeds[51], savedNeeds[52], savedNeeds[53]] },
-    { nom_produit: "acide_hyaluronique_promo", image: "image_data", description: "acide_hyaluronique_promo", needs: [savedNeeds[0], savedNeeds[1], savedNeeds[2]] },
-    { nom_produit: "coffret_orange_mandarine_promo", image: "image_data", description: "coffret_orange_mandarine_promo", needs: [savedNeeds[3], savedNeeds[4], savedNeeds[5]] },
-    { nom_produit: "coffret_ashwa_curcuma_promo", image: "image_data", description: "coffret_ashwa_curcuma_promo", needs: [savedNeeds[6], savedNeeds[7], savedNeeds[8]] }
+    { nom_produit: "Lavande Pure", image: "/assets/images/imgenerate/lavande_pure.jpg", description: "Huile essentielle de lavande 100% pure, idéale pour la relaxation et les soins de la peau.", prix: 15, Promo: false, needs: ["sommeil", "stress", "peau_cheveux"] },
+    { nom_produit: "Eucalyptus Energisant", image: "/assets/images/imgenerate/eucalyptus.jpg", description: "Huile essentielle d'eucalyptus pour une sensation de fraîcheur et de clarté.", prix: 12, Promo: false, needs: ["vitalite", "voies_respiratoires", "concentration"] },
+    { nom_produit: "Menthe Poivrée", image: "/assets/images/imgenerate/menthe_poivree.jpg", description: "Huile essentielle de menthe poivrée pour un boost de fraîcheur et de concentration.", prix: 14, Promo: false, needs: ["concentration", "maux de tête"] },
+    { nom_produit: "Orange Douce", image: "/assets/images/imgenerate/orange_douce.jpg", description: "Huile essentielle d'orange douce pour une atmosphère joyeuse et revitalisante.", prix: 13, Promo: false, needs: ["moral", "stress", "vitalite"] },
+    { nom_produit: "Tea Tree Purifiant", image: "/assets/images/imgenerate/tea_tree.jpg", description: "Huile essentielle de tea tree pour un soin purifiant et antibactérien.", prix: 15, Promo: false, needs: ["beaute_purifiant", "infections", "peau_cheveux"] },
+    { nom_produit: "Citronnelle Naturelle", image: "/assets/images/imgenerate/citronnelle.jpg", description: "Huile essentielle de citronnelle pour un environnement frais et sans insectes.", prix: 10, Promo: false, needs: ["insectes", "parfum_ambiance"] },
+    { nom_produit: "Jasmin Enchanteur", image: "/assets/images/imgenerate/jasmin.jpg", description: "Huile essentielle de jasmin pour une sensation de bien-être et de bonheur.", prix: 18, Promo: false, needs: ["moral", "parfum"] },
+    { nom_produit: "Romarin Tonifiant", image: "/assets/images/imgenerate/romarin.jpg", description: "Huile essentielle de romarin pour une stimulation mentale et physique.", prix: 14, Promo: false, needs: ["circulation", "concentration", "ongles_et_cheveux"] },
+    { nom_produit: "Ylang-Ylang Sensuel", image: "/assets/images/imgenerate/ylang_ylang.jpg", description: "Huile essentielle d'ylang-ylang pour une ambiance romantique et apaisante.", prix: 16, Promo: false, needs: ["stress", "sexualite", "moral"] },
+    { nom_produit: "Bois de Santal", image: "/assets/images/imgenerate/bois_santal.jpg", description: "Huile essentielle de bois de santal pour une méditation profonde et une relaxation.", prix: 20, Promo: false, needs: ["stress", "meditation", "peau_cheveux"] },
+    { nom_produit: "Immunité Boost", image: "/assets/images/imgenerate/immunite_boost.jpg", description: "Complément alimentaire à base de vitamines C et D, zinc et échinacée.", prix: 25, Promo: false, needs: ["immunite", "infections"] },
+    { nom_produit: "Vitalité Quotidienne", image: "/assets/images/imgenerate/vitalite.jpg", description: "Mélange de vitamines B, fer et ginseng pour une énergie quotidienne durable.", prix: 30, Promo: false, needs: ["vitalite", "concentration"] },
+    { nom_produit: "Sérénité", image: "/assets/images/imgenerate/serenite.jpg", description: "Mélange de magnésium et de plantes pour réduire le stress et favoriser le calme.", prix: 28, Promo: false, needs: ["stress", "sommeil"] },
+    { nom_produit: "Détox", image: "/assets/images/imgenerate/detox.jpg", description: "Complément détoxifiant à base de charbon actif et de spiruline.", prix: 32, Promo: false, needs: ["detox", "digestion"] },
+    { nom_produit: "Digestion Facile", image: "/assets/images/imgenerate/digestion_facile.jpg", description: "Complément pour améliorer la digestion à base de fenouil et de menthe poivrée.", prix: 20, Promo: false, needs: ["digestion"] },
+    { nom_produit: "Articulations Flexibles", image: "/assets/images/imgenerate/articulations.jpg", description: "Complément pour la santé des articulations à base de curcuma et de collagène.", prix: 35, Promo: false, needs: ["os", "circulation"] },
+    { nom_produit: "Beauté Peau", image: "/assets/images/imgenerate/beaute_peau.jpg", description: "Mélange de biotine, collagène et vitamines pour une peau éclatante.", prix: 29, Promo: false, needs: ["beaute_de_la_peau"] },
+    { nom_produit: "Sommeil Paisible", image: "/assets/images/imgenerate/sommeil_paisible.jpg", description: "Complément pour favoriser un sommeil réparateur à base de mélatonine et de camomille.", prix: 22, Promo: false, needs: ["sommeil", "stress"] },
+    { nom_produit: "Mémoire Vive", image: "/assets/images/imgenerate/memoire_vive.jpg", description: "Complément pour améliorer la mémoire et la concentration à base de ginkgo biloba.", prix: 27, Promo: false, needs: ["memoire", "concentration"] },
+    { nom_produit: "Énergie Naturelle", image: "/assets/images/imgenerate/energie_naturelle.jpg", description: "Mélange de guarana, maca et vitamine B12 pour un coup de boost naturel.", prix: 26, Promo: false, needs: ["vitalite", "sport"] },
+    { nom_produit: "Crème Hydratante Lavande", image: "/assets/images/imgenerate/creme_lavande.jpg", description: "Crème hydratante pour le corps enrichie en huile essentielle de lavande.", prix: 18, Promo: false, needs: ["peau_cheveux", "stress"] },
+    { nom_produit: "Gommage Sucre & Agrumes", image: "/assets/images/imgenerate/gommage_sucre.jpg", description: "Gommage corporel au sucre et huiles essentielles d'agrumes.", prix: 20, Promo: false, needs: ["beaute_de_la_peau", "circulation"] },
+    { nom_produit: "Baume à Lèvres Miel", image: "/assets/images/imgenerate/baume_levres.jpg", description: "Baume à lèvres hydratant au miel et à la cire d'abeille.", prix: 8, Promo: false, needs: ["peau_cheveux"] },
+    { nom_produit: "Huile de Massage Relaxante", image: "/assets/images/imgenerate/huile_massage.jpg", description: "Huile de massage aux huiles essentielles de lavande et de camomille.", prix: 22, Promo: false, needs: ["stress", "corps"] },
+    { nom_produit: "Gel Douche Revitalisant", image: "/assets/images/imgenerate/gel_douche.jpg", description: "Gel douche aux huiles essentielles de menthe et d'eucalyptus.", prix: 15, Promo: false, needs: ["peau_cheveux", "vitalite"] },
+    { nom_produit: "Lait Corporel Nourrissant", image: "/assets/images/imgenerate/lait_corporel.jpg", description: "Lait corporel hydratant à l'huile de coco et de vanille.", prix: 18, Promo: false, needs: ["peau_cheveux"] },
+    { nom_produit: "Crème Réparatrice Mains", image: "/assets/images/imgenerate/creme_mains.jpg", description: "Crème pour les mains réparatrice à l'huile d'amande douce.", prix: 12, Promo: false, needs: ["main", "peau_cheveux"] },
+    { nom_produit: "Exfoliant Corps Café", image: "/assets/images/imgenerate/exfoliant_cafe.jpg", description: "Exfoliant corporel au café pour une peau lisse et éclatante.", prix: 19, Promo: false, needs: ["beaute_de_la_peau", "circulation"] },
+    { nom_produit: "Beurre Corporel Karité", image: "/assets/images/imgenerate/beurre_karite.jpg", description: "Beurre corporel riche en karité pour une hydratation intense.", prix: 20, Promo: false, needs: ["peau_cheveux"] },
+    { nom_produit: "Déodorant Naturel Citron", image: "/assets/images/imgenerate/deodorant_citron.jpg", description: "Déodorant naturel à l'huile essentielle de citron.", prix: 10, Promo: false, needs: ["alternatives_saines"] },
+    { nom_produit: "Lotion Après-Soleil Aloe Vera", image: "/assets/images/imgenerate/apres_soleil.jpg", description: "Lotion apaisante après-soleil à l'aloé vera et camomille.", prix: 15, Promo: false, needs: ["bronzage", "peau_cheveux"] },
+    { nom_produit: "Shampooing Fortifiant Romarin", image: "/assets/images/imgenerate/shampooing_romarin.jpg", description: "Shampooing fortifiant à l'huile essentielle de romarin.", prix: 14, Promo: false, needs: ["beaute_cheveux", "ongles_et_cheveux"] },
+    { nom_produit: "Après-Shampooing Nourrissant Coco", image: "/assets/images/imgenerate/apres_shampooing.jpg", description: "Après-shampooing nourrissant à l'huile de coco.", prix: 16, Promo: false, needs: ["beaute_cheveux", "ongles_et_cheveux"] },
+    { nom_produit: "Masque Capillaire Réparateur Karité", image: "/assets/images/imgenerate/masque_capillaire.jpg", description: "Masque capillaire réparateur au beurre de karité.", prix: 20, Promo: false, needs: ["beaute_cheveux", "ongles_et_cheveux"] },
+    { nom_produit: "Sérum Anti-Frisottis Argan", image: "/assets/images/imgenerate/serum_argan.jpg", description: "Sérum capillaire anti-frisottis à l'huile d'argan.", prix: 18, Promo: false, needs: ["beaute_cheveux", "ongles_et_cheveux"] },
+    { nom_produit: "Spray Volume Racines", image: "/assets/images/imgenerate/spray_volume.jpg", description: "Spray volumateur pour les racines aux extraits naturels.", prix: 15, Promo: false, needs: ["beaute_cheveux"] },
+    { nom_produit: "Huile Capillaire Nourrissante Jojoba", image: "/assets/images/imgenerate/huile_jojoba.jpg", description: "Huile capillaire nourrissante à l'huile de jojoba.", prix: 17, Promo: false, needs: ["beaute_cheveux", "ongles_et_cheveux"] },
+    { nom_produit: "Spray Assainissant Citron", image: "/assets/images/imgenerate/spray_assainissant.jpg", description: "Spray assainissant à l'huile essentielle de citron pour une maison propre et fraîche.", prix: 12, Promo: false, needs: ["parfum_ambiance", "infections"] },
+    { nom_produit: "Nettoyant Multi-Surfaces Lavande", image: "/assets/images/imgenerate/nettoyant_lavande.jpg", description: "Nettoyant multi-surfaces à l'huile essentielle de lavande.", prix: 10, Promo: false, needs: ["alternatives_saines", "parfum_ambiance"] },
+    { nom_produit: "Lessive Naturelle Eucalyptus", image: "/assets/images/imgenerate/lessive.jpg", description: "Lessive naturelle à l'huile essentielle d'eucalyptus pour un linge frais.", prix: 15, Promo: false, needs: ["alternatives_saines", "vitalite"] },
+    { nom_produit: "Désodorisant Solide Menthe", image: "/assets/images/imgenerate/desodorisant.jpg", description: "Désodorisant solide à l'huile essentielle de menthe pour une fraîcheur durable.", prix: 8, Promo: false, needs: ["parfum_ambiance", "insectes"] },
+    { nom_produit: "Savon Liquide Citronnelle", image: "/assets/images/imgenerate/savon_liquide.jpg", description: "Savon liquide à l'huile essentielle de citronnelle pour un lavage efficace des mains.", prix: 7, Promo: false, needs: ["alternatives_saines", "parfum_ambiance"] },
+    { nom_produit: "Anti-Mites Naturel Cèdre", image: "/assets/images/imgenerate/anti_mites.jpg", description: "Sachets anti-mites au bois de cèdre pour protéger les vêtements.", prix: 12, Promo: false, needs: ["insectes", "alternatives_saines"] },
+    { nom_produit: "Diffuseur Ultrasonique Bois", image: "/assets/images/imgenerate/diffuseur.jpg", description: "Diffuseur d'huiles essentielles à ultrasons en bois pour une ambiance apaisante.", prix: 40, Promo: false, needs: ["stress", "parfum_ambiance"] },
+    { nom_produit: "Bougie Parfumée Lavande", image: "/assets/images/imgenerate/bougie.jpg", description: "Bougie parfumée à l'huile essentielle de lavande pour une relaxation totale.", prix: 18, Promo: false, needs: ["parfum_ambiance", "stress"] },
+    { nom_produit: "Roll-On Sérénité", image: "/assets/images/imgenerate/roll_on.jpg", description: "Roll-on aux huiles essentielles de lavande et camomille pour le bien-être.", prix: 12, Promo: false, needs: ["stress", "sommeil"] },
+    { nom_produit: "Bain Aromatique Eucalyptus", image: "/assets/images/imgenerate/bain.jpg", description: "Sel de bain aromatique à l'huile essentielle d'eucalyptus pour une détente revitalisante.", prix: 15, Promo: false, needs: ["corps", "vitalite"] },
+    { nom_produit: "Brume d'Oreiller Camomille", image: "/assets/images/imgenerate/brume.jpg", description: "Brume d'oreiller à l'huile essentielle de camomille pour un sommeil réparateur.", prix: 10, Promo: false, needs: ["sommeil", "stress"] },
+    { nom_produit: "Inhalateur Respiration Menthe", image: "/assets/images/imgenerate/inhalateur.jpg", description: "Inhalateur aux huiles essentielles de menthe pour une respiration claire.", prix: 8, Promo: false, needs: ["voies_respiratoires", "vitalite"] }
   ];
 
   // Sauvegarder les produits sans doublons
   for (const productData of productsData) {
     let product = await productRepository.findOneBy({ nom_produit: productData.nom_produit });
     if (!product) {
-      product = productRepository.create(productData);
+      const productNeeds = productData.needs.map(needName => savedNeeds.find(n => n.nom_besoin === needName));
+      product = productRepository.create({ ...productData, needs: productNeeds });
       await productRepository.save(product);
     }
   }
