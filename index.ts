@@ -1,26 +1,25 @@
-
 import AppDataSource from './data.source';
 import express from 'express';
 import cors  from 'cors';
+import productRouter from './routes/ProductRoutes';
+import userRouter from './routes/UserRoutes';
+import dotenv from 'dotenv';
 
-
-
+dotenv.config(); // Charger les variables d'environnement à partir du fichier .env
 AppDataSource.initialize().then(() => {
-// var qui est une app de express et permet d'utiliser les fonctionnalités d'express
+// Créer une instance d'application Express
 const app = express();
+
+//Middleware
 app.use(cors());
-//on paramètre la possibilité de récupérer des infos dans un  body au format json
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send("Hello, world!");
-});
+//Routes
+app.use("/products", productRouter);
+app.use("/users", userRouter);
 
-//je defini l'url pour les routes uniquement
-// app.use("/products", plantRouter);
-// app.use("/users", userRouter);
-
+// démarrer le server
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });
-})
+}).catch(error => console.log("Error during Data Source initialization:", error));
