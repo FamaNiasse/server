@@ -37,6 +37,7 @@ export class UserService {
 
   // Méthode de login
   async login(email: string, password: string) {
+    console.log("UserService - login");
     // Récupérer l'utilisateur
     const user = await this.userRepository.findOneBy({ email: email });
 
