@@ -126,7 +126,13 @@ async function createProductsWithNeeds() {
     { nom_produit: "Roll-On Sérénité", image: "/assets/images/imgenerate/roll_on.jpg", description: "Roll-on aux huiles essentielles de lavande et camomille pour le bien-être.", prix: 12, Promo: false, needs: ["stress", "sommeil"] },
     { nom_produit: "Bain Aromatique Eucalyptus", image: "/assets/images/imgenerate/bain.jpg", description: "Sel de bain aromatique à l'huile essentielle d'eucalyptus pour une détente revitalisante.", prix: 15, Promo: false, needs: ["corps", "vitalite"] },
     { nom_produit: "Brume d'Oreiller Camomille", image: "/assets/images/imgenerate/brume.jpg", description: "Brume d'oreiller à l'huile essentielle de camomille pour un sommeil réparateur.", prix: 10, Promo: false, needs: ["sommeil", "stress"] },
-    { nom_produit: "Inhalateur Respiration Menthe", image: "/assets/images/imgenerate/inhalateur.jpg", description: "Inhalateur aux huiles essentielles de menthe pour une respiration claire.", prix: 8, Promo: false, needs: ["voies_respiratoires", "vitalite"] }
+    { nom_produit: "Inhalateur Respiration Menthe", image: "/assets/images/imgenerate/inhalateur.jpg", description: "Inhalateur aux huiles essentielles de menthe pour une respiration claire.", prix: 8, Promo: false, needs: ["voies_respiratoires", "vitalite"] },
+
+    { nom_produit: "Huile Essentielle de Rose", image: "/assets/images/imgenerate/huile_essentielle_rose.jpg", description: "Huile essentielle de rose 100% pure.", prix: 22, Promo: false, needs: ["stress", "peau_cheveux", "moral"] },
+    { nom_produit: "Huile Essentielle de Lavandin", image: "/assets/images/imgenerate/huile_essentielle_lavandin.jpg", description: "Huile essentielle de lavandin pour une relaxation douce.", prix: 14, Promo: false, needs: ["stress", "sommeil"] },
+    { nom_produit: "Complément Minceur", image: "/assets/images/imgenerate/complement_minceur.jpg", description: "Complément alimentaire à base de thé vert et garcinia cambogia.", prix: 30, Promo: false, needs: ["sante_minceur", "metabolisme"] },
+    { nom_produit: "Complément Équilibre Hormonal", image: "/assets/images/imgenerate/complement_equilibre_hormonal.jpg", description: "Mélange de maca et d'ashwagandha pour un équilibre hormonal.", prix: 28, Promo: false, needs: ["hormones", "stress", "moral"] },
+    { nom_produit: "Lotion Tonique Citron", image: "/assets/images/imgenerate/lotion_tonique_citron.jpg", description: "Lotion tonique pour le corps à l'huile essentielle de citron.", prix: 15, Promo: false, needs: ["peau_cheveux", "vitalite"] }
   ];
 
   // Sauvegarder les produits sans doublons
