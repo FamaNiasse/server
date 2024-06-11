@@ -3,6 +3,14 @@ import { UserController } from "../controller/UserController";
 import AppDataSource from "../data.source";
 import { User } from "../entities/UserEntity";
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
+
+interface JwtPayload {
+  id: number;
+  email: string;
+  role: number;
+}
+
 
 const userRepository = AppDataSource.getRepository(User);
 
@@ -41,6 +49,67 @@ userRouter.post("/login", (req, res) => {
 //   }
 // });
 
+// Route pour récupérer les informations de l'utilisateur actuel
+userRouter.get('/me', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
 
+  const token = authHeader.split(' ')[1];
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    console.log('Decoded token:', decodedToken);
+    const user = await userRepository.findOne({ where: { id: decodedToken.id } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error('Token verification error:', error);
+    res.status(500).json({ message: 'Failed to authenticate token', error });
+  }
+});
+
+userRouter.get('/', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    if (decodedToken.role !== 1) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    const users = await userRepository.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users', error });
+  }
+});
+
+userRouter.delete('/:id', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+    if (decodedToken.role !== 1) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    const { id } = req.params;
+    await userRepository.delete(id);
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error });
+  }
+});
 
 export default userRouter;
