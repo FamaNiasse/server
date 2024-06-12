@@ -55,6 +55,18 @@ export class UserController {
     }
   }
 
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    const { pseudo, email, role } = req.body;
+    const updatedUser = await this.userService.update(Number(id), pseudo, email, role);
+
+    if (updatedUser) {
+      res.status(200).json({ message: 'User updated', data: updatedUser });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  }
+
   async getAllUsers(req: Request, res: Response) {
     try {
       const users = await this.userService.getAllUsers();
