@@ -1,5 +1,6 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Needs } from "./NeedsEntity";
+import { Category } from "./CategoryEntity";
 
 @Entity()
 export class Product {
@@ -21,6 +22,10 @@ export class Product {
 
   @Column({ type: 'boolean', default: false })
   promo: boolean;
+
+  
+  @ManyToOne(() => Category, category => category.products)
+  category: Category;
 
   @ManyToMany(() => Needs, needs => needs.products)
   @JoinTable({

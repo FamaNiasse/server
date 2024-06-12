@@ -1,7 +1,6 @@
 import { Router } from "express";
 import ProductController from "../controller/ProductController";
 
-
 const productRouter = Router();
 const productController = new ProductController();
 
@@ -16,6 +15,12 @@ productRouter.get("/", (req, res) => {
 productRouter.get("/:id", (req, res) => {
     console.log("ProductRouter get by id");
     productController.getById(req, res);
+});
+
+// GetByCategory
+productRouter.get("/category/:categoryId", (req, res) => {
+    console.log("ProductRouter get by category");
+    productController.getByCategory(req, res);
 });
 
 // Create

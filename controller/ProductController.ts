@@ -27,6 +27,17 @@ class ProductController {
         }
     }
 
+    async getByCategory(req: Request, res: Response) {
+        console.log("ProductController get by category");
+
+        try {
+            const products = await this.productService.getByCategory(Number(req.params.categoryId));
+            res.send({ status: "OK", data: products });
+        } catch (error) {
+            res.status(500).send({ status: "Failed", message: error });
+        }
+    }
+
     async create(req: Request, res: Response) {
         console.log("ProductController create");
 
