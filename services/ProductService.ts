@@ -1,18 +1,22 @@
 import AppDataSource from "../data.source";
 import { Product } from "../entities/ProductEntity";
 
-
 class ProductService {
     private productRepository = AppDataSource.getRepository(Product);
 
     async getAll() {
         console.log("ProductServices");
-        return this.productRepository.find();
+        return this.productRepository.find({ relations: ["category"] });
     }
 
     async getById(id: number) {
         console.log("ProductService by id");
-        return this.productRepository.findOneBy({ id: id });
+        return this.productRepository.findOne({ where: { id }, relations: ["category"] });
+    }
+
+    async getByCategory(categoryId: number) {
+        console.log("ProductService by category");
+        return this.productRepository.find({ where: { category: { id: categoryId } }, relations: ["category"] });
     }
 
     async create(product: Product) {
