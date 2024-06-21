@@ -59,7 +59,21 @@ class NeedsController {
       res.status(500).send({ status: 'Failed', message: error });
     }
   }
+
+  async getProductsByNeed(req: Request, res: Response) {
+    console.log("NeedsController get products by need");
+    try {
+        const { id } = req.params;
+        const products = await this.needsService.getProductsByNeed(Number(id));
+        res.send({ status: "OK", data: products });
+    } catch (error) {
+        res.status(500).send({ status: "Failed", message: error });
+    }
 }
+}
+
+
+
 
 export default NeedsController;
 

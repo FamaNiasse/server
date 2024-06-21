@@ -27,6 +27,21 @@ class NeedsService {
     await this.needRepository.delete(id);
     return { deleted: true };
   }
+
+
+  async getProductsByNeed(needId: number) {
+    const need = await this.needRepository.findOne({
+      where: { id: needId },
+      relations: ["products"],
+    });
+
+    if (!need) {
+      throw new Error("Need not found");
+    }
+
+    return need.products;
+  }
+  
 }
 
 export default NeedsService;
