@@ -8,32 +8,32 @@ export class Pharmacy {
   id: number;
 
   @Column({ nullable: false })
-  nom_pharmacie: string;
+  nom_pharmacie?: string;
 
   @Column({ nullable: true })
-  numero_voie: number;
+  numero_voie?: number;
 
   @Column({ nullable: true })
-  type_de_voie: string;
+  type_de_voie?: string;
 
   @Column({ nullable: true })
-  voie: string;
+  voie?: string;
 
   @Column({ nullable: false })
-  departement: number;
+  departement?: number;
 
   @Column({ nullable: false })
-  ville: string;
+  ville?: string;
 
   @Column({ nullable: false })
-  cp: number;
+  cp?: number;
 
   @Column({ nullable: false })
-  commune: string;
+  commune?: string;
 
   @Column({ nullable: true })
-  telephone: number;
+  telephone?: number;
 
   @ManyToMany(() => Product, product => product.pharmacies)
-  products: Product[];
+  products?: Product[];
 }
