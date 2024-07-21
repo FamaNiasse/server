@@ -5,6 +5,7 @@ import productRouter from './routes/ProductRoutes';
 import userRouter from './routes/UserRoutes';
 import dotenv from 'dotenv';
 import needRouter from './routes/NeedsRoutes';
+import pharmacyRouter from './routes/PharmacyRoutes';
 
 dotenv.config(); // Charger les variables d'environnement à partir du fichier .env
 AppDataSource.initialize().then(() => {
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/needs", needRouter);
+app.use("/pharmacy", pharmacyRouter);
 
 // démarrer le server
 app.listen(process.env.PORT, () => {
