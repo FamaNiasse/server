@@ -4,6 +4,7 @@ import { Product } from "./entities/ProductEntity";
 import { User } from "./entities/UserEntity";
 import { Needs } from "./entities/NeedsEntity";
 import { Category } from "./entities/CategoryEntity";
+import { Pharmacy } from "./entities/PharmacyEntity";
 
 // Charger les variables d'environnement depuis .env.local
 dotenv.config({path: ".env.local"});
@@ -28,7 +29,7 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [Product, User, Needs, Category],
+  entities: [Product, User, Needs, Category, Pharmacy],
 });
 
 export default AppDataSource;

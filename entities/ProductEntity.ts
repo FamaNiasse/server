@@ -1,6 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Needs } from "./NeedsEntity";
 import { Category } from "./CategoryEntity";
+import { Pharmacy } from "./PharmacyEntity";
 
 @Entity()
 export class Product {
@@ -23,13 +24,12 @@ export class Product {
   @Column({ type: 'boolean', default: false })
   promo: boolean;
 
-  
   @ManyToOne(() => Category, category => category.products)
   category: Category;
 
   @ManyToMany(() => Needs, needs => needs.products)
   @JoinTable({
-    name: "product_needs", // nom de la table de liaison
+    name: "product_needs",
     joinColumn: {
       name: "product_id",
       referencedColumnName: "id"
@@ -40,5 +40,18 @@ export class Product {
     }
   })
   needs?: Needs[];
-}
 
+  @ManyToMany(() => Pharmacy, pharmacy => pharmacy.products)
+  @JoinTable({
+    name: "product_pharmacy",
+    joinColumn: {
+      name: "product_id",
+      referencedColumnName: "id"
+    },
+    inverseJoinColumn: {
+      name: "pharmacy_id",
+      referencedColumnName: "id"
+    }
+  })
+  pharmacies?: Pharmacy[];
+}

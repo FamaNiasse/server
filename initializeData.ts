@@ -27,7 +27,7 @@ const initializeData = async () => {
 
   await productRepository.save(products);
 
-  console.log('Data initialized');
+  console.log('Catégories mises à jour');
   await AppDataSource.destroy();
 };
 
