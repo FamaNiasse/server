@@ -20,12 +20,14 @@ class ProductController {
         console.log("ProductController get by id");
 
         try {
-            const product = await this.productService.getById(Number(req.params.id));
+            const product = await this.productService.getByIdWithPharmacies(Number(req.params.id));
             res.send({ status: "OK", data: product });
         } catch (error) {
             res.status(500).send({ status: "Failed", message: error });
         }
     }
+
+    
 
     async getByCategory(req: Request, res: Response) {
         console.log("ProductController get by category");
