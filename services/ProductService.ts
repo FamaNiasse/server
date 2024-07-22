@@ -14,6 +14,11 @@ class ProductService {
         return this.productRepository.findOne({ where: { id }, relations: ["category"] });
     }
 
+    async getByIdWithPharmacies(id: number) {
+        console.log("ProductService by id with pharmacies");
+        return this.productRepository.findOne({ where: { id }, relations: ["category", "pharmacies"] });
+    }
+
     async getByCategory(categoryId: number) {
         console.log("ProductService by category");
         return this.productRepository.find({ where: { category: { id: categoryId } }, relations: ["category"] });
