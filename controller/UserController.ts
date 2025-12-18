@@ -46,14 +46,15 @@ export class UserController {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    const { token } = user;
+    const { token, role } = user;
+  
 
     if (token) {
-      res.status(200).json({ token, user, message: 'Connexion success' });
+      res.status(200).json({ token, role , message: 'Connexion success' });
     } else {
       res.status(500).json({ message: 'Failed to connect' });
     }
-  }
+  } 
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
