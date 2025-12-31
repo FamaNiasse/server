@@ -12,6 +12,7 @@ export class UserController {
   private userService = new UserService();
 
   async signup(req: Request, res: Response) {
+    
     const { pseudo, email, password, role } = req.body;
 
     if (role === 1) {
@@ -32,6 +33,7 @@ export class UserController {
 
     if (createUser) {
       res.status(201).json({ message: 'User created' });
+      console.log("UserController - signup");
     } else {
       res.status(400).json({ message: 'User already exists' });
     }
